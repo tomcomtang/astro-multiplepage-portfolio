@@ -13,7 +13,29 @@ import Footer from '../components/Footer.astro';
     <meta name="description" content="A showcase of my work and thoughts" />
     <script src="https://cdnstatic.tencentcs.com/edgeone/pages/assets/unified.js" data-set="mode=fab"></script>
     <script>
-      ((e,t,r,n,o,a,l,i)=>{let u=document.documentElement,s=["light","dark"];function c(t){(Array.isArray(e)?e:[e]).forEach(e=>{let r="class"===e,n=r&&a?o.map(e=>a[e]||e):o;r?(u.classList.remove(...n),u.classList.add(a&&a[t]?a[t]:t)):u.setAttribute(e,t)}),i&&s.includes(t)&&(u.style.colorScheme=t)}if(n)c(n);else try{let e=localStorage.getItem(t)||r,n=l&&"system"===e?window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light":e;c(n)}catch(e){}})("class","theme","dark",null,["light","dark"],null,true,true)
+      // 主题切换功能
+      document.addEventListener('DOMContentLoaded', function() {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const initialTheme = savedTheme === 'system' ? (prefersDark ? 'dark' : 'light') : savedTheme;
+        
+        if (initialTheme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+        
+        // 监听系统主题变化
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+          if (localStorage.getItem('theme') === 'system') {
+            if (e.matches) {
+              document.documentElement.classList.add('dark');
+            } else {
+              document.documentElement.classList.remove('dark');
+            }
+          }
+        });
+      });
     </script>
     <style>
       body { margin: 0; font-family: system-ui, -apple-system, sans-serif; }
@@ -26,18 +48,18 @@ import Footer from '../components/Footer.astro';
       }
     </style>
   </head>
-  <body class="__className_f367f3">
+  <body class="__className_f367f3 bg-white dark:bg-neutral-900 transition-colors duration-300">
     <!-- Navigation Bar -->
     <Navigation />
 
     <div class="relative h-screen overflow-hidden">
       <!-- 网格背景覆盖整个页面 -->
       <div class="absolute inset-0 z-0 overflow-hidden">
-        <div class="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:28px_48px] -z-10"></div>
+        <div class="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#ffffff04_1px,transparent_1px),linear-gradient(to_bottom,#ffffff04_1px,transparent_1px)] bg-[size:28px_48px] -z-10"></div>
         
         <!-- 模糊背景层 -->
         <div class="absolute inset-0 -z-10">
-          <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[1200px] w-[1200px] rounded-full bg-neutral-400 opacity-10 blur-[100px]"></div>
+          <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[1200px] w-[1200px] rounded-full bg-neutral-400 opacity-10 blur-[100px] dark:bg-neutral-600 dark:opacity-15"></div>
         </div>
       </div>
       
@@ -47,11 +69,11 @@ import Footer from '../components/Footer.astro';
           <div class="flex-1 flex items-center justify-center">
                 <div class="flex flex-row items-center justify-between w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 gap-12">
                   <div class="w-[45%] text-left">
-                    <h1 class="text-3xl font-bold tracking-tight text-neutral-900 dark:text-white sm:text-4xl">Hello, I'm Your Name</h1>
+                    <h1 class="text-3xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100 sm:text-4xl">Hello, I'm Your Name</h1>
                     <p class="mt-3 text-lg leading-7 text-neutral-600 dark:text-neutral-400">A passionate frontend developer with a keen eye for design and a love for creating beautiful, functional web experiences.</p>
                     <div class="flex flex-row gap-4 mt-4">
-                      <a class="group inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-neutral-900 rounded-lg hover:bg-neutral-800 dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-100 transition-all duration-300 hover:scale-105 cursor-pointer" href="/about/">View About<svg class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg></a>
-                      <a class="group inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-neutral-900 bg-white border border-neutral-300 rounded-lg hover:bg-neutral-50 dark:bg-neutral-900 dark:text-white dark:border-neutral-700 dark:hover:bg-neutral-800 transition-all duration-300 hover:scale-105 cursor-pointer" href="/posts/">Read Posts<svg class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg></a>
+                      <a class="group inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-neutral-900 rounded-lg hover:bg-neutral-800 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-200 transition-all duration-300 hover:scale-105 cursor-pointer" href="/about/">View About<svg class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg></a>
+                      <a class="group inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-neutral-900 bg-white border border-neutral-300 rounded-lg hover:bg-neutral-50 dark:bg-neutral-800 dark:text-neutral-100 dark:border-neutral-600 dark:hover:bg-neutral-700 transition-all duration-300 hover:scale-105 cursor-pointer" href="/posts/">Read Posts<svg class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg></a>
                     </div>
                   </div>
                   <div class="w-[45%] flex items-center justify-center bg-transparent">
@@ -59,7 +81,7 @@ import Footer from '../components/Footer.astro';
                       <img
                         src="/assets/images/tech-background.svg"
                         alt="Tech Background"
-                        class="w-full h-full animate-[float_15s_ease-in-out_infinite] hover:scale-125 transition-transform duration-300 opacity-80"
+                        class="w-full h-full animate-[float_15s_ease-in-out_infinite] hover:scale-125 transition-transform duration-300 opacity-80 dark:opacity-90 dark:invert-[0.1]"
                         style={{
                           animation: 'float 15s ease-in-out infinite',
                           transform: 'scale(1.2)',
