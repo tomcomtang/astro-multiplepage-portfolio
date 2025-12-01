@@ -78,15 +78,67 @@ import Footer from '../components/Footer.astro';
                   </div>
                   <div class="w-[45%] flex items-center justify-center bg-transparent">
                     <div class="relative w-[700px] h-[700px]">
-                      <img
-                        src="/assets/images/tech-background.svg"
-                        alt="Tech Background"
-                        class="w-full h-full animate-[float_15s_ease-in-out_infinite] hover:scale-125 transition-transform duration-300 opacity-80 dark:opacity-90 dark:invert-[0.1]"
-                        style={{
-                          animation: 'float 15s ease-in-out infinite',
-                          transform: 'scale(1.2)',
-                        }}
-                      />
+                      <!-- 白色主题时显示外部SVG图片 -->
+                      <img src="https://multiplepage-portfolio.edgeone.app/assets/images/tech-background-light.svg" 
+                           alt="Tech Background" 
+                           class="w-full h-full animate-[float_15s_ease-in-out_infinite] hover:scale-125 transition-transform duration-300 opacity-90 dark:hidden" />
+                      
+                      <!-- 暗黑主题时显示内联SVG动画图 -->
+                      <svg width="700" height="700" viewBox="0 0 800 800" class="w-full h-full animate-[float_15s_ease-in-out_infinite] hover:scale-125 transition-transform duration-300 opacity-90 hidden dark:block text-neutral-700 dark:text-neutral-100">
+                        <style>
+                          @keyframes scale {
+                            0% { transform: scale(1); }
+                            50% { transform: scale(1.02); }
+                            100% { transform: scale(1); }
+                          }
+                          .radar {
+                            fill: none;
+                            stroke: currentColor;
+                            stroke-width: 1.5;
+                            opacity: 0.08;
+                            animation: scale 10s ease-in-out infinite;
+                          }
+                          .radar-fill {
+                            fill: none;
+                            stroke: currentColor;
+                            stroke-width: 1.5;
+                            opacity: 0.08;
+                            animation: scale 10s ease-in-out infinite;
+                          }
+                          .dark .radar {
+                            stroke-width: 2;
+                            opacity: 0.12;
+                          }
+                          .dark .radar-fill {
+                            fill: currentColor;
+                            stroke: none;
+                            opacity: 0.05;
+                          }
+                        </style>
+
+                        <!-- Radar Chart -->
+                        <g transform="translate(270, 400)">
+                          <!-- Radar Grid -->
+                          <g>
+                            <polygon class="radar radar-fill" points="0,-200 173.2,-100 173.2,100 0,200 -173.2,100 -173.2,-100" />
+                            <polygon class="radar radar-fill" points="0,-150 129.9,-75 129.9,75 0,150 -129.9,75 -129.9,-75" />
+                            <polygon class="radar radar-fill" points="0,-100 86.6,-50 86.6,50 0,100 -86.6,50 -86.6,-50" />
+                            <polygon class="radar radar-fill" points="0,-50 43.3,-25 43.3,25 0,50 -43.3,25 -43.3,-25" />
+                          </g>
+
+
+                          
+                          <!-- Radar Lines -->
+                          <g>
+                            <line class="radar" x1="0" y1="0" x2="0" y2="-200" />
+                            <line class="radar" x1="0" y1="0" x2="173.2" y2="-100" />
+                            <line class="radar" x1="0" y1="0" x2="173.2" y2="100" />
+                            <line class="radar" x1="0" y1="0" x2="0" y2="200" />
+                            <line class="radar" x1="0" y1="0" x2="-173.2" y2="100" />
+                            <line class="radar" x1="0" y1="0" x2="-173.2" y2="-100" />
+                          </g>
+                        </g>
+                      </svg>
                     </div>
                   </div>
                 </div>
