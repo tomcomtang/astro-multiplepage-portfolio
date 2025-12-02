@@ -1,0 +1,147 @@
+---
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>About - Your Portfolio</title>
+    <meta name="description" content="Learn more about my background, skills, and experience" />
+    <script src="https://cdnstatic.tencentcs.com/edgeone/pages/assets/unified.js" data-set="mode=fab"></script>
+    <script>
+      // 主题切换功能
+      document.addEventListener('DOMContentLoaded', function() {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const initialTheme = savedTheme === 'system' ? (prefersDark ? 'dark' : 'light') : savedTheme;
+        
+        if (initialTheme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+        
+        // 监听系统主题变化
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+          if (localStorage.getItem('theme') === 'system') {
+            if (e.matches) {
+              document.documentElement.classList.add('dark');
+            } else {
+              document.documentElement.classList.remove('dark');
+            }
+          }
+        });
+      });
+    </script>
+  </head>
+  <body class="min-h-screen flex flex-col bg-white dark:bg-neutral-900 transition-colors duration-300">
+    <!-- 背景网格 -->
+    <div class="relative flex-grow flex flex-col">
+      <div class="absolute inset-0 z-0">
+        <div class="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:28px_48px] -z-10"></div>
+        <div class="absolute left-0 right-0 top-0 -z-10 m-auto h-[1200px] w-[1200px] rounded-full bg-neutral-400 opacity-10 blur-[100px]"></div>
+      </div>
+
+      <Navigation />
+
+      <!-- 主要内容区域 -->
+      <section class="relative z-20 w-[896px] mx-auto mt-32 mb-12">
+        <div class="relative z-20 w-full mx-auto lg:mx-0">
+          <h2 class="text-2xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100 sm:text-3xl lg:text-4xl">
+            About Me
+          </h2>
+          <div class="flex flex-col md:flex-row gap-8 mt-3 sm:mt-4 lg:mt-6">
+            <div class="w-full md:w-1/2 flex flex-col">
+              <p class="text-sm leading-6 text-gray-600 dark:text-neutral-400 sm:leading-7 lg:leading-8 sm:text-base lg:text-lg">
+                This is where you can introduce yourself or your company. Share your story, mission, and values. 
+                Explain what makes you unique and why people should be interested in your work. Keep it concise but engaging.
+              </p>
+              <div class="mt-auto pt-4 flex flex-wrap gap-2">
+                <span class="px-3 py-1 text-sm bg-neutral-200 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-200 rounded-full">Next.js</span>
+                <span class="px-3 py-1 text-sm bg-neutral-200 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-200 rounded-full">React</span>
+                <span class="px-3 py-1 text-sm bg-neutral-200 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-200 rounded-full">TypeScript</span>
+                <span class="px-3 py-1 text-sm bg-neutral-200 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-200 rounded-full">Tailwind CSS</span>
+                <span class="px-3 py-1 text-sm bg-neutral-200 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-200 rounded-full">Node.js</span>
+                <span class="px-3 py-1 text-sm bg-neutral-200 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-200 rounded-full">Docker</span>
+                <span class="px-3 py-1 text-sm bg-neutral-200 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-200 rounded-full">Git</span>
+                <span class="px-3 py-1 text-sm bg-neutral-200 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-200 rounded-full">AWS</span>
+              </div>
+            </div>
+            <div class="w-full md:w-1/2 flex justify-end">
+              <div class="relative w-[360px] h-[360px]">
+                <img
+                  src="/assets/images/about/coder.jpg"
+                  alt="Profile"
+                  class="object-cover rounded-xl w-full h-full"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-col md:flex-row mt-20">
+          <div class="flex-1">
+            <h2 class="mb-2 text-2xl font-bold dark:text-neutral-200">Experience</h2>
+            <div class="py-10">
+              <div class="pb-10 border-l border-gray-200 last:border-l-0 dark:border-neutral-700">
+                <div class="relative flex flex-col justify-start pl-12">
+                  <div class="absolute top-0 left-0 z-40 flex items-center justify-center -translate-x-1/2 bg-white border rounded-full dark:bg-neutral-950 w-14 h-14 border-neutral-300 dark:border-neutral-700">
+                    <svg class="w-8 h-8 text-neutral-700 dark:text-neutral-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                    </svg>
+                  </div>
+                  <p class="text-xs uppercase text-neutral-400 dark:text-neutral-500 tracking-widest">2022 - Present</p>
+                  <h3 class="my-1 text-lg font-bold dark:text-neutral-100">Senior Frontend Developer</h3>
+                  <p class="mb-1 text-sm font-medium dark:text-neutral-300">Tencent Cloud</p>
+                  <p class="text-sm font-light text-neutral-600 dark:text-neutral-400">Leading frontend development for EdgeOne platform and templates.</p>
+                </div>
+              </div>
+              <div class="pb-10 border-l border-gray-200 last:border-l-0 dark:border-neutral-700">
+                <div class="relative flex flex-col justify-start pl-12">
+                  <div class="absolute top-0 left-0 z-40 flex items-center justify-center -translate-x-1/2 bg-white border rounded-full dark:bg-neutral-950 w-14 h-14 border-neutral-300 dark:border-neutral-700">
+                    <svg class="w-8 h-8 text-neutral-700 dark:text-neutral-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                    </svg>
+                  </div>
+                  <p class="text-xs uppercase text-neutral-400 dark:text-neutral-500 tracking-widest">2020 - 2022</p>
+                  <h3 class="my-1 text-lg font-bold dark:text-neutral-100">Frontend Developer</h3>
+                  <p class="mb-1 text-sm font-medium dark:text-neutral-300">Tencent Cloud</p>
+                  <p class="text-sm font-light text-neutral-600 dark:text-neutral-400">Developed and maintained multiple web applications and tools.</p>
+                </div>
+              </div>
+              <div class="pb-10 border-l border-gray-200 last:border-l-0 dark:border-neutral-700">
+                <div class="relative flex flex-col justify-start pl-12">
+                  <div class="absolute top-0 left-0 z-40 flex items-center justify-center -translate-x-1/2 bg-white border rounded-full dark:bg-neutral-950 w-14 h-14 border-neutral-300 dark:border-neutral-700">
+                    <svg class="w-8 h-8 text-neutral-700 dark:text-neutral-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                    </svg>
+                  </div>
+                  <p class="text-xs uppercase text-neutral-400 dark:text-neutral-500 tracking-widest">2018 - 2020</p>
+                  <h3 class="my-1 text-lg font-bold dark:text-neutral-100">Junior Developer</h3>
+                  <p class="mb-1 text-sm font-medium dark:text-neutral-300">Tencent Cloud</p>
+                  <p class="text-sm font-light text-neutral-600 dark:text-neutral-400">Worked on various client projects and internal tools.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="w-[360px] ml-8">
+            <h2 class="mb-2 text-2xl font-bold dark:text-neutral-200">Let's Connect</h2>
+            <div class="py-[30px]">
+              <p class="text-sm leading-6 text-gray-600 dark:text-neutral-400 sm:leading-7 lg:leading-8 sm:text-base lg:text-lg">
+                Feel free to reach out if you want to collaborate or just say hi! You can find us on social media or drop us an 
+                <a href="mailto:media_service@tencent.com" class="text-indigo-600 underline">email</a>.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <Footer />
+  </body>
+</html>
