@@ -1,9 +1,16 @@
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// 使用 Astro 内置的 markdown 支持，通过 import.meta.glob 导入所有 markdown 文件
+// Astro 的 import.meta.glob 会自动解析 markdown 文件的 frontmatter
+const allMarkdownModules = import.meta.glob<{
+  frontmatter: {
+    title?: string;
+    description?: string;
+    date?: string;
+    readTime?: string;
+    image?: string;
+    slug?: string;
+  };
+  default: any;
+}>('../content/posts/*.md', { eager: true });
 
 export interface Post {
   title: string;
@@ -16,77 +23,45 @@ export interface Post {
 }
 
 /**
- * Parse frontmatter from markdown file content
- */
-function parseFrontmatter(content: string): Record<string, string> {
-  const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---/;
-  const match = content.match(frontmatterRegex);
-
-  if (!match) {
-    return {};
-  }
-
-  const frontmatterString = match[1];
-  const frontmatter: Record<string, string> = {};
-  const lines = frontmatterString.split('\n');
-
-  for (const line of lines) {
-    const colonIndex = line.indexOf(':');
-    if (colonIndex === -1) continue;
-
-    const key = line.substring(0, colonIndex).trim();
-    let value = line.substring(colonIndex + 1).trim();
-
-    // Remove quotes if present
-    if ((value.startsWith('"') && value.endsWith('"')) ||
-        (value.startsWith("'") && value.endsWith("'"))) {
-      value = value.slice(1, -1);
-    }
-
-    frontmatter[key] = value;
-  }
-
-  return frontmatter;
-}
-
-/**
  * Get all posts from the content directory
+ * 使用 Astro 的 import.meta.glob 自动解析 markdown 文件
  */
 export function getAllPosts(): Post[] {
-  // Get the project root (go up from src/utils to project root)
-  const projectRoot = path.resolve(__dirname, '../..');
-  const postsDir = path.join(projectRoot, 'src/content/posts');
-  
-  if (!fs.existsSync(postsDir)) {
-    console.warn(`Posts directory not found: ${postsDir}`);
-    return [];
-  }
-
-  const files = fs.readdirSync(postsDir).filter(file => file.endsWith('.md'));
   const posts: Post[] = [];
 
-  for (const file of files) {
-    const filePath = path.join(postsDir, file);
-    const content = fs.readFileSync(filePath, 'utf-8');
-
-    try {
-      const frontmatter = parseFrontmatter(content);
-      
-      // Use slug from frontmatter or generate from filename
-      const slug = frontmatter.slug || path.basename(file, '.md');
-      
-      posts.push({
-        title: frontmatter.title || '',
-        description: frontmatter.description || '',
-        date: frontmatter.date || '',
-        readTime: frontmatter.readTime || '5 min read',
-        image: frontmatter.image || '/assets/images/posts/post1.jpg',
-        slug: slug,
-        href: `/posts/${slug}/`,
-      });
-    } catch (error) {
-      console.error(`Error parsing ${file}:`, error);
+  for (const filePath in allMarkdownModules) {
+    const module = allMarkdownModules[filePath];
+    
+    if (!module) {
+      console.warn(`Failed to load module: ${filePath}`);
+      continue;
     }
+
+    // Astro 自动解析的 frontmatter
+    const frontmatter = module.frontmatter || {};
+    
+    // 从文件路径提取 slug（文件名）
+    // filePath 格式类似: ../content/posts/docker-basics.md
+    const pathMatch = filePath.match(/\/([^/]+)\.md$/);
+    const fileName = pathMatch ? pathMatch[1] : '';
+    
+    // 优先使用 frontmatter 中的 slug，否则使用文件名
+    const slug = frontmatter.slug || fileName;
+    
+    if (!slug) {
+      console.warn(`No slug found for file: ${filePath}`);
+      continue;
+    }
+    
+    posts.push({
+      title: frontmatter.title || '',
+      description: frontmatter.description || '',
+      date: frontmatter.date || '',
+      readTime: frontmatter.readTime || '5 min read',
+      image: frontmatter.image || '/assets/images/posts/post1.jpg',
+      slug: slug,
+      href: `/posts/${slug}`,
+    });
   }
 
   // Sort by date (newest first)
@@ -97,4 +72,53 @@ export function getAllPosts(): Post[] {
   });
 
   return posts;
+}
+
+/**
+ * Get a single post by slug
+ * 返回包含 Content 组件的完整对象，供动态路由使用
+ */
+export function getPostBySlug(slug: string): {
+  frontmatter: {
+    title?: string;
+    description?: string;
+    date?: string;
+    readTime?: string;
+    image?: string;
+    slug?: string;
+  };
+  Content: any;
+  slug: string;
+} | null {
+  for (const filePath in allMarkdownModules) {
+    const module = allMarkdownModules[filePath];
+    
+    if (!module) {
+      continue;
+    }
+
+    const frontmatter = module.frontmatter || {};
+    
+    // 从文件路径提取 slug（文件名）
+    const pathMatch = filePath.match(/\/([^/]+)\.md$/);
+    const fileName = pathMatch ? pathMatch[1] : '';
+    const fileSlug = frontmatter.slug || fileName;
+
+    if (fileSlug === slug) {
+      return {
+        frontmatter,
+        Content: module.default, // Astro 的 Content 组件是默认导出
+        slug: fileSlug,
+      };
+    }
+  }
+
+  return null;
+}
+
+/**
+ * Get all post slugs for static generation
+ */
+export function getAllPostSlugs(): string[] {
+  return getAllPosts().map((post) => post.slug);
 }

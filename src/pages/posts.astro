@@ -281,7 +281,8 @@ const postsData = JSON.stringify(allPosts);
           if (!target || !target.href) return;
 
           const href = target.getAttribute("href");
-          if (href && href.startsWith("/posts")) {
+          // 只拦截分页链接（包含 ?page= 的链接），不拦截文章详情页链接
+          if (href && href.startsWith("/posts") && href.includes("?page=")) {
             e.preventDefault();
             const url = new URL(href, window.location.origin);
             const page = url.searchParams.get("page") || "1";
@@ -298,8 +299,13 @@ const postsData = JSON.stringify(allPosts);
         renderPosts(currentPage);
         renderPagination(currentPage);
 
-        // 监听分页链接点击
-        document.addEventListener("click", handlePaginationClick);
+        // 只在分页容器上监听点击事件，避免拦截文章链接
+        const paginationContainer = document.getElementById(
+          "pagination-container"
+        );
+        if (paginationContainer) {
+          paginationContainer.addEventListener("click", handlePaginationClick);
+        }
 
         // 监听URL变化（前进/后退按钮）
         window.addEventListener("popstate", function () {
@@ -351,7 +357,7 @@ const postsData = JSON.stringify(allPosts);
       <Navigation />
 
       <!-- 主要内容区域 -->
-      <section class="relative z-20 w-[896px] mx-auto mt-12">
+      <section class="relative z-20 w-[896px] mx-auto mt-24">
         <div class="flex justify-between items-center mb-12">
           <h2
             class="text-2xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100 sm:text-3xl lg:text-4xl"
