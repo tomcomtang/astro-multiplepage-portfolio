@@ -13,7 +13,6 @@ import { aboutContent } from "../config/content.ts";
     <title>{aboutContent.meta.title}</title>
     <meta name="description" content={aboutContent.meta.description} />
     <script>
-      // 主题切换功能
       document.addEventListener("DOMContentLoaded", function () {
         const savedTheme = localStorage.getItem("theme") || "light";
         const prefersDark = window.matchMedia(
@@ -32,7 +31,6 @@ import { aboutContent } from "../config/content.ts";
           document.documentElement.classList.remove("dark");
         }
 
-        // 监听系统主题变化
         window
           .matchMedia("(prefers-color-scheme: dark)")
           .addEventListener("change", (e) => {
@@ -50,7 +48,6 @@ import { aboutContent } from "../config/content.ts";
   <body
     class="min-h-screen flex flex-col bg-white dark:bg-neutral-900 transition-colors duration-300"
   >
-    <!-- 背景网格 -->
     <div class="relative flex-grow flex flex-col">
       <div class="absolute inset-0 z-0">
         <div
@@ -64,8 +61,6 @@ import { aboutContent } from "../config/content.ts";
       </div>
 
       <Navigation />
-
-      <!-- 主要内容区域 -->
       <section class="relative z-20 w-[896px] mx-auto mt-24 mb-12">
         <div class="relative z-20 w-full mx-auto lg:mx-0">
           <h2

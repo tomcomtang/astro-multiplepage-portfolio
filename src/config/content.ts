@@ -1,11 +1,9 @@
-// 全局配置和文案内容
 export const siteConfig = {
   name: "Your Portfolio",
   title: "Someone's Portfolio",
   description: "A showcase of my work and thoughts",
 };
 
-// 首页文案
 export const homeContent = {
   title: "Hello, I'm Your Name",
   description:
@@ -26,7 +24,6 @@ export const homeContent = {
   },
 };
 
-// About 页面文案
 export const aboutContent = {
   meta: {
     title: "About - Your Portfolio",
@@ -85,7 +82,6 @@ export const aboutContent = {
   },
 };
 
-// Projects 页面文案
 export const projectsContent = {
   meta: {
     title: "Projects - Your Portfolio",

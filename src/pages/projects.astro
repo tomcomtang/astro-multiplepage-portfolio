@@ -13,7 +13,6 @@ import { projectsContent } from "../config/content.ts";
     <title>{projectsContent.meta.title}</title>
     <meta name="description" content={projectsContent.meta.description} />
     <script>
-      // 主题切换功能
       document.addEventListener("DOMContentLoaded", function () {
         const savedTheme = localStorage.getItem("theme") || "light";
         const prefersDark = window.matchMedia(
@@ -32,7 +31,6 @@ import { projectsContent } from "../config/content.ts";
           document.documentElement.classList.remove("dark");
         }
 
-        // 监听系统主题变化
         window
           .matchMedia("(prefers-color-scheme: dark)")
           .addEventListener("change", (e) => {
@@ -62,7 +60,6 @@ import { projectsContent } from "../config/content.ts";
       main {
         flex: 1;
       }
-      /* 确保Footer紧贴底部 */
       section[class*="text-gray-700"] {
         margin: 0;
         padding: 0;
@@ -71,7 +68,6 @@ import { projectsContent } from "../config/content.ts";
     </style>
   </head>
   <body class="bg-white dark:bg-neutral-900 transition-colors duration-300">
-    <!-- 背景网格 - 覆盖整个body区域 -->
     <div class="fixed inset-0 z-0 pointer-events-none">
       <div
         class="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:28px_48px] -z-10"
@@ -83,11 +79,8 @@ import { projectsContent } from "../config/content.ts";
       </div>
     </div>
 
-    <!-- 主要内容区域 - 使用flex: 1填充空间 -->
     <main class="flex-1 relative z-10">
       <Navigation />
-
-      <!-- 主要内容区域 -->
       <section class="relative z-20 max-w-4xl mx-auto mt-32 mb-12 px-7 lg:px-0">
         <div class="relative z-20 w-full mx-auto lg:mx-0">
           <h2
@@ -101,7 +94,6 @@ import { projectsContent } from "../config/content.ts";
             {projectsContent.description}
           </p>
 
-          <!-- 项目列表 - 3列网格布局 -->
           <div
             class="z-50 grid items-stretch w-full grid-cols-1 my-8 gap-7 sm:gap-5 sm:grid-cols-2 lg:grid-cols-3"
           >
@@ -172,7 +164,6 @@ import { projectsContent } from "../config/content.ts";
       </section>
     </main>
 
-    <!-- Footer - 紧贴底部 -->
     <Footer />
   </body>
 </html>

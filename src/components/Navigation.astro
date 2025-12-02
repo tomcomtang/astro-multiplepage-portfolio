@@ -63,7 +63,6 @@
 </nav>
 
 <script>
-  // 主题切换功能
   document.addEventListener("DOMContentLoaded", function () {
     const themeToggle = document.getElementById("theme-toggle");
     const lightIcon = themeToggle.querySelector(".theme-icon-light");
@@ -79,7 +78,6 @@
       }
     }
 
-    // 初始化图标状态
     const isDark = document.documentElement.classList.contains("dark");
     updateThemeIcon(isDark);
 
@@ -87,13 +85,10 @@
       const isDark = document.documentElement.classList.contains("dark");
       const newTheme = isDark ? "light" : "dark";
 
-      // 切换主题类
       document.documentElement.classList.toggle("dark");
 
-      // 更新图标
       updateThemeIcon(!isDark);
 
-      // 保存到localStorage
       localStorage.setItem("theme", newTheme);
     });
   });

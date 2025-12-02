@@ -13,7 +13,6 @@ import { siteConfig, homeContent } from "../config/content.ts";
     <title>{siteConfig.title}</title>
     <meta name="description" content={siteConfig.description} />
     <script>
-      // 主题切换功能
       document.addEventListener("DOMContentLoaded", function () {
         const savedTheme = localStorage.getItem("theme") || "light";
         const prefersDark = window.matchMedia(
@@ -32,7 +31,6 @@ import { siteConfig, homeContent } from "../config/content.ts";
           document.documentElement.classList.remove("dark");
         }
 
-        // 监听系统主题变化
         window
           .matchMedia("(prefers-color-scheme: dark)")
           .addEventListener("change", (e) => {
@@ -71,7 +69,6 @@ import { siteConfig, homeContent } from "../config/content.ts";
   <body
     class="min-h-screen flex flex-col bg-white dark:bg-neutral-900 transition-colors duration-300"
   >
-    <!-- 背景网格 -->
     <div class="relative flex-grow flex flex-col">
       <div class="absolute inset-0 z-0 overflow-hidden">
         <div
@@ -85,10 +82,7 @@ import { siteConfig, homeContent } from "../config/content.ts";
         </div>
       </div>
 
-      <!-- Navigation Bar -->
       <Navigation />
-
-      <!-- 内容区域 -->
       <div class="relative z-10 flex flex-col flex-1 pt-4 min-h-0">
         <main class="flex-grow flex flex-col min-h-0">
           <div class="flex-1 flex items-center justify-center min-h-0">
@@ -146,7 +140,6 @@ import { siteConfig, homeContent } from "../config/content.ts";
                   class="relative overflow-hidden"
                   style="width: min(700px, 45vw); height: min(700px, 70vh); max-width: 100%; max-height: 70vh;"
                 >
-                  <!-- 白色主题时显示外部SVG图片 -->
                   <img
                     src={homeContent.images.light}
                     alt="Tech Background"
@@ -154,7 +147,6 @@ import { siteConfig, homeContent } from "../config/content.ts";
                     style="max-width: 100%; max-height: 100%;"
                   />
 
-                  <!-- 暗黑主题时显示SVG图片 -->
                   <img
                     src={homeContent.images.dark}
                     alt="Tech Background Dark"

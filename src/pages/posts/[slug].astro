@@ -3,7 +3,6 @@ import Navigation from "../../components/Navigation.astro";
 import Footer from "../../components/Footer.astro";
 import { getPostBySlug, getAllPostSlugs } from "../../utils/getPosts";
 
-// 生成所有可能的 slug 路径，用于静态生成
 export async function getStaticPaths() {
   const slugs = getAllPostSlugs();
   return slugs.map((slug) => ({
@@ -11,24 +10,20 @@ export async function getStaticPaths() {
   }));
 }
 
-// 获取 URL 中的 slug 参数
 const { slug } = Astro.params;
 
 if (!slug) {
   return Astro.redirect("/posts/");
 }
 
-// 获取文章数据
 const post = getPostBySlug(slug);
 
 if (!post) {
-  // 如果找不到文章，返回 404 或重定向到列表页
   return Astro.redirect("/posts/");
 }
 
 const { frontmatter, Content } = post;
 
-// 确保 Content 组件存在
 if (!Content) {
   console.error(`Content component not found for slug: ${slug}`);
   return Astro.redirect("/posts/");
@@ -44,7 +39,6 @@ if (!Content) {
     <title>{frontmatter.title} - Your Portfolio</title>
     <meta name="description" content={frontmatter.description} />
     <script>
-      // 主题切换功能
       document.addEventListener("DOMContentLoaded", function () {
         const savedTheme = localStorage.getItem("theme") || "light";
         const prefersDark = window.matchMedia(
@@ -63,7 +57,6 @@ if (!Content) {
           document.documentElement.classList.remove("dark");
         }
 
-        // 监听系统主题变化
         window
           .matchMedia("(prefers-color-scheme: dark)")
           .addEventListener("change", (e) => {
@@ -76,7 +69,6 @@ if (!Content) {
             }
           });
 
-        // 移除 markdown 内容中的第一个 h1 标题（避免与页面标题重复）
         const proseContainer = document.querySelector(".prose");
         if (proseContainer) {
           const firstH1 = proseContainer.querySelector("h1");
@@ -102,13 +94,11 @@ if (!Content) {
       main {
         flex: 1;
       }
-      /* 确保Footer紧贴底部 */
       section[class*="text-gray-700"] {
         margin: 0;
         padding: 0;
         flex-shrink: 0;
       }
-      /* 隐藏 markdown 内容中的第一个 h1 标题（避免与页面标题重复） */
       .prose h1:first-of-type,
       .prose > h1:first-child,
       article .prose h1:first-child {
@@ -117,7 +107,6 @@ if (!Content) {
     </style>
   </head>
   <body class="bg-white dark:bg-neutral-900 transition-colors duration-300">
-    <!-- 背景网格 - 覆盖整个body区域 -->
     <div class="fixed inset-0 z-0 pointer-events-none">
       <div
         class="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:28px_48px] -z-10"
@@ -129,13 +118,10 @@ if (!Content) {
       </div>
     </div>
 
-    <!-- 主要内容区域 - 使用flex: 1填充空间 -->
     <main class="flex-1 relative z-10">
       <Navigation />
 
-      <!-- 文章内容 -->
       <article class="relative z-20 w-[896px] mx-auto mt-24 mb-12 px-7 lg:px-0">
-        <!-- 文章标题 -->
         <header class="text-center">
           <h1
             class="text-2xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100 sm:text-3xl lg:text-4xl mb-1.5"
@@ -161,7 +147,6 @@ if (!Content) {
           </div>
         </header>
 
-        <!-- 文章描述 -->
         {
           frontmatter.description && (
             <p class="text-lg text-neutral-600 dark:text-neutral-400 mb-16 text-center">
@@ -170,14 +155,12 @@ if (!Content) {
           )
         }
 
-        <!-- Markdown 内容 - 使用 prose 类来应用 Tailwind Typography 样式 -->
         <div class="prose prose-neutral dark:prose-invert max-w-none">
           <Content />
         </div>
       </article>
     </main>
 
-    <!-- Footer - 紧贴底部 -->
     <Footer />
   </body>
 </html>

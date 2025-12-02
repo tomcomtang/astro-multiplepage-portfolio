@@ -3,13 +3,10 @@ import Navigation from "../components/Navigation.astro";
 import Footer from "../components/Footer.astro";
 import { getAllPosts } from "../utils/getPosts";
 
-// 分页配置
 const POSTS_PER_PAGE = 5;
 
-// 从markdown文件读取所有文章数据
 const allPosts = getAllPosts();
 
-// 将所有文章数据传递给客户端（用于分页）
 const postsData = JSON.stringify(allPosts);
 ---
 
@@ -22,7 +19,6 @@ const postsData = JSON.stringify(allPosts);
     <title>Blog Posts - Your Portfolio</title>
     <meta name="description" content="Read my latest blog posts and articles" />
     <script>
-      // 主题切换功能
       document.addEventListener("DOMContentLoaded", function () {
         const savedTheme = localStorage.getItem("theme") || "light";
         const prefersDark = window.matchMedia(
@@ -41,7 +37,6 @@ const postsData = JSON.stringify(allPosts);
           document.documentElement.classList.remove("dark");
         }
 
-        // 监听系统主题变化
         window
           .matchMedia("(prefers-color-scheme: dark)")
           .addEventListener("change", (e) => {
@@ -56,21 +51,18 @@ const postsData = JSON.stringify(allPosts);
       });
     </script>
     <script define:vars={{ postsData, POSTS_PER_PAGE }}>
-      // 分页功能
       document.addEventListener("DOMContentLoaded", function () {
         const allPosts = JSON.parse(postsData);
         const postsPerPage = POSTS_PER_PAGE;
         const totalPosts = allPosts.length;
         const totalPages = Math.ceil(totalPosts / postsPerPage);
 
-        // 获取当前页码
         function getCurrentPage() {
           const urlParams = new URLSearchParams(window.location.search);
           const page = urlParams.get("page");
           return page ? parseInt(page, 10) : 1;
         }
 
-        // 生成分页URL
         function getPageUrl(page) {
           if (page === 1) {
             return "/posts/";
@@ -78,7 +70,6 @@ const postsData = JSON.stringify(allPosts);
           return `/posts/?page=${page}`;
         }
 
-        // 渲染文章列表
         function renderPosts(page) {
           const currentPage = Math.max(1, Math.min(page, totalPages));
           const startIndex = (currentPage - 1) * postsPerPage;
@@ -197,7 +188,6 @@ const postsData = JSON.stringify(allPosts);
             .join("");
         }
 
-        // 渲染分页导航
         function renderPagination(page) {
           const currentPage = Math.max(1, Math.min(page, totalPages));
           const paginationContainer = document.getElementById(
@@ -213,7 +203,6 @@ const postsData = JSON.stringify(allPosts);
           let paginationHTML =
             '<div class="flex justify-center items-center gap-2 mt-8">';
 
-          // Previous 按钮
           if (currentPage > 1) {
             paginationHTML += `
               <a
@@ -233,7 +222,6 @@ const postsData = JSON.stringify(allPosts);
             `;
           }
 
-          // 页码按钮
           for (let i = 1; i <= totalPages; i++) {
             const isCurrentPage = i === currentPage;
             paginationHTML += `
@@ -251,7 +239,6 @@ const postsData = JSON.stringify(allPosts);
             `;
           }
 
-          // Next 按钮
           if (currentPage < totalPages) {
             paginationHTML += `
               <a
@@ -275,13 +262,11 @@ const postsData = JSON.stringify(allPosts);
           paginationContainer.innerHTML = paginationHTML;
         }
 
-        // 处理分页链接点击
         function handlePaginationClick(e) {
           const target = e.target.closest("a");
           if (!target || !target.href) return;
 
           const href = target.getAttribute("href");
-          // 只拦截分页链接（包含 ?page= 的链接），不拦截文章详情页链接
           if (href && href.startsWith("/posts") && href.includes("?page=")) {
             e.preventDefault();
             const url = new URL(href, window.location.origin);
@@ -294,12 +279,10 @@ const postsData = JSON.stringify(allPosts);
           }
         }
 
-        // 初始渲染
         const currentPage = getCurrentPage();
         renderPosts(currentPage);
         renderPagination(currentPage);
 
-        // 只在分页容器上监听点击事件，避免拦截文章链接
         const paginationContainer = document.getElementById(
           "pagination-container"
         );
@@ -307,7 +290,6 @@ const postsData = JSON.stringify(allPosts);
           paginationContainer.addEventListener("click", handlePaginationClick);
         }
 
-        // 监听URL变化（前进/后退按钮）
         window.addEventListener("popstate", function () {
           const page = getCurrentPage();
           renderPosts(page);
@@ -331,7 +313,6 @@ const postsData = JSON.stringify(allPosts);
       main {
         flex: 1;
       }
-      /* 确保Footer紧贴底部 */
       section[class*="text-gray-700"] {
         margin: 0;
         padding: 0;
@@ -340,7 +321,6 @@ const postsData = JSON.stringify(allPosts);
     </style>
   </head>
   <body class="bg-white dark:bg-neutral-900 transition-colors duration-300">
-    <!-- 背景网格 - 覆盖整个body区域 -->
     <div class="fixed inset-0 z-0 pointer-events-none">
       <div
         class="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:28px_48px] -z-10"
@@ -352,11 +332,8 @@ const postsData = JSON.stringify(allPosts);
       </div>
     </div>
 
-    <!-- 主要内容区域 - 使用flex: 1填充空间 -->
     <main class="flex-1 relative z-10">
       <Navigation />
-
-      <!-- 主要内容区域 -->
       <section class="relative z-20 w-[896px] mx-auto mt-24">
         <div class="flex justify-between items-center mb-12">
           <h2
@@ -366,22 +343,16 @@ const postsData = JSON.stringify(allPosts);
           </h2>
         </div>
 
-        <!-- 文章列表容器 -->
         <div
           id="posts-container"
           class="flex flex-col items-stretch w-full gap-8"
         >
-          <!-- 文章将在这里动态渲染 -->
         </div>
 
-        <!-- 分页导航容器 -->
-        <div id="pagination-container">
-          <!-- 分页将在这里动态渲染 -->
-        </div>
+        <div id="pagination-container"></div>
       </section>
     </main>
 
-    <!-- Footer - 紧贴底部 -->
     <Footer />
   </body>
 </html>
