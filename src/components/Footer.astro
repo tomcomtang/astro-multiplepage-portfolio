@@ -1,5 +1,5 @@
 ---
-
+import { siteConfig } from "../config/content";
 ---
 
 <!-- Footer Component -->
@@ -26,7 +26,7 @@
       class="inline-flex justify-center mt-2 space-x-5 sm:ml-auto sm:mt-0 sm:justify-start"
     >
       <a
-        href="https://x.com/TencentCloudEO"
+        href={siteConfig.social.twitter}
         target="_blank"
         class="text-neutral-500 dark:text-neutral-400 hover:text-neutral-400 dark:hover:text-neutral-300"
       >
@@ -45,7 +45,7 @@
         </svg>
       </a>
       <a
-        href="https://github.com/TencentEdgeOne"
+        href={siteConfig.social.github}
         target="_blank"
         class="text-neutral-500 dark:text-neutral-400 hover:text-neutral-400 dark:hover:text-neutral-300"
       >
@@ -63,7 +63,7 @@
         </svg>
       </a>
       <a
-        href="mailto:media_service@tencent.com"
+        href={siteConfig.social.email}
         class="text-neutral-500 dark:text-neutral-400 hover:text-neutral-400 dark:hover:text-neutral-300"
       >
         <span class="sr-only">Email</span>

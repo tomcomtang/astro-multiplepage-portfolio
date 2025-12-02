@@ -2,6 +2,11 @@ export const siteConfig = {
   name: "Your Portfolio",
   title: "Someone's Portfolio",
   description: "A showcase of my work and thoughts",
+  social: {
+    github: "https://github.com/tomcomtang/astro-multiplepage-portfolio",
+    twitter: "https://x.com/astrodotbuild",
+    email: "mailto:364786053@qq.com",
+  },
 };
 
 export const homeContent = {
@@ -77,7 +82,7 @@ export const aboutContent = {
       "Feel free to reach out if you want to collaborate or just say hi! You can find us on social media or drop us an",
     email: {
       text: "email",
-      href: "mailto:media_service@tencent.com",
+      href: "mailto:364786053@qq.com",
     },
   },
 };
