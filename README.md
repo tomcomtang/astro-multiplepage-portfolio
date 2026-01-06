@@ -1,4 +1,4 @@
-# Multiple Page Portfolio
+# Multiple Page Portfolio.
 
 A modern, responsive portfolio website built with Astro, featuring multiple pages including a blog system, projects showcase, and about page.
 
