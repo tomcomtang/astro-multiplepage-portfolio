@@ -8,14 +8,5 @@ export default defineConfig({
   output: 'static',
   adapter: staticAdapter(),
 
-  integrations: [tailwind()],
-
-  server: {
-    port: 4321,
-    host: true
-  },
-
-  devToolbar: {
-    enabled: false
-  }
+  integrations: [tailwind()]
 });
